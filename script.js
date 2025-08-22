@@ -1,30 +1,67 @@
-const texts = ["a Full-Stack Developer.", "a Problem-Solver.", "an AI Enthusiast."];
-let currentIndex = 0;
-let charIndex = 0;
+// Typing effect (already in your script)
+const typingText = document.querySelector('.typing-text');
+
+const phrases = [
+  "Software Developer & IT Professional",
+  "Passionate Coder",
+  "Open Source Enthusiast",
+  "Web & Backend Developer"
+];
+
+let currentPhraseIndex = 0;
+let currentCharIndex = 0;
 let isDeleting = false;
-function typeEffect() {
-    const display = document.querySelector(".typing-text");
-    if (!display) return;
-    const currentText = texts[currentIndex];
-    let updatedText = isDeleting ? currentText.substring(0, charIndex--) : currentText.substring(0, charIndex++);
-    display.textContent = updatedText;
-    //adjust speed
-    let speed = isDeleting ? 60 : 100;
-    if (!isDeleting && updatedText === currentText) {
-        speed = 1200;
-        isDeleting = true;
+let typingSpeed = 120;
+
+function type() {
+  const currentPhrase = phrases[currentPhraseIndex];
+  
+  if (!isDeleting) {
+    typingText.textContent = currentPhrase.slice(0, currentCharIndex + 1);
+    currentCharIndex++;
+
+    if (currentCharIndex === currentPhrase.length) {
+      isDeleting = true;
+      typingSpeed = 1500;
+    } else {
+      typingSpeed = 120;
     }
-    else if (isDeleting && updatedText === "") {
-        isDeleting = false;
-        currentIndex = (currentIndex + 1) % texts.length;
-        speed=1500;
+  } else {
+    typingText.textContent = currentPhrase.slice(0, currentCharIndex - 1);
+    currentCharIndex--;
+
+    if (currentCharIndex === 0) {
+      isDeleting = false;
+      currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+      typingSpeed = 500;
+    } else {
+      typingSpeed = 80;
     }
-    setTimeout(typeEffect,speed)
+  }
+
+  setTimeout(type, typingSpeed);
 }
 
-typeEffect();
-
-document.getElementById('contact-form').addEventListener("submit", function (e) {
-    e.preventDefault();
-    alert("Thank you for your message,Yousuf will resppond soon!")
+document.addEventListener('DOMContentLoaded', () => {
+  if (typingText) type();
 });
+
+// Scroll animations
+const sections = document.querySelectorAll('.fade-in-section');
+const cards = document.querySelectorAll('.card');
+
+const observer = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.2 }
+);
+
+sections.forEach(section => observer.observe(section));
+cards.forEach(card => observer.observe(card));
+

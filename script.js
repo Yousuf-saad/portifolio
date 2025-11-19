@@ -65,3 +65,47 @@ const observer = new IntersectionObserver(
 sections.forEach(section => observer.observe(section));
 cards.forEach(card => observer.observe(card));
 
+// Gallery Lightbox Script
+const galleryItems = document.querySelectorAll(".gallery-item");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const closeBtn = document.querySelector(".lightbox .close");
+const prevBtn = document.querySelector(".lightbox .prev");
+const nextBtn = document.querySelector(".lightbox .next");
+
+let currentIndex = 0;
+
+galleryItems.forEach((item, index) => {
+  item.addEventListener("click", () => {
+    lightbox.style.display = "flex";
+    lightboxImg.src = item.src;
+    currentIndex = index;
+  });
+});
+
+closeBtn.addEventListener("click", () => {
+  lightbox.style.display = "none";
+});
+
+prevBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+  lightboxImg.src = galleryItems[currentIndex].src;
+});
+
+nextBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex + 1) % galleryItems.length;
+  lightboxImg.src = galleryItems[currentIndex].src;
+});
+
+// Close lightbox on background click
+lightbox.addEventListener("click", (e) => {
+  if (e.target === lightbox) {
+    lightbox.style.display = "none";
+  }
+});// Mobile menu toggle
+const menuToggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector("header nav");
+
+menuToggle.addEventListener("click", () => {
+  nav.classList.toggle("active");
+});

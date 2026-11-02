@@ -1,0 +1,548 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{profile.full_name}}|Home{% endblock %}
+{% block content %}
+<section id="home" class="hero">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6 order-2 order-lg-1" data-aos="fade-right">
+                {% if profile %}
+                <p class="welcome">
+                    Hello I'm
+                </p>
+                <h1>{{profile.full_name}}</h1>
+                <h2 class="typing-title">
+                    <span id="typing" data-words="{{profile.profession}}">
+                    </span>
+                    <span class="cursor">|</span>
+                </h2>
+                <p class="hero-text">
+                    {{profile.about}}
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        Hire Me
+                    </a>
+                    {% if profile.resume %}
+                    <a href="{{profile.resume.url}}" class="btn btn-primary-outline ms-2" download>
+                        <i class="fa-solid fa-download"></i>
+                        Download CV
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="social-icons">
+                    {% if profile.github %}
+                    <a href="{{profile.github}}" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    {% endif %}
+                    {% if profile.linkedin %}
+                    <a href="{{profile.linkedin}}" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    {% endif %}
+                    {% if profile.instagram%}
+                    <a href="{{profile.instagram}}" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    {% endif %}
+                    {% if profile.whatsapp%}
+                    <a href="{{profile.whatsapp}}" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    {% endif %}
+                </div>
+                {% else %}
+                <h1>Welcome</h1>
+                <p>Add your profile information from admin panel.</p>
+                {% endif %}
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2 text-center" data-aos="fade-left">
+                {% if profile.profile_image %}
+                <div class="profile-box">
+                    <div class="profile-ring">
+                        <img src="{{profile.profile_image.url}}" alt="{{profile.full_name}}" class="profile-image">
+                    </div>
+                </div>
+                {% else %}
+                <img src="{% static 'images/default-profile.png' %}" class="profile-image">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+<section id="about" class="about py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h2>{{about.title}}</h2>
+                <p>{{about.description}}</p>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="row g-4">
+                    <div class="col-6">
+                        <div class="stat-card">
+                            <h3>{{about.years_experience}}+</h3>
+                            <p>Years Experience</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-card">
+                            <h3>{{about.total_projects}}+</h3>
+                            <p>Projects</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-card">
+                            <h3>{{about.technologies}}+</h3>
+                            <p>Technologies</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-card">
+                            <h3>{{about.certifications}}+</h3>
+                            <p>certifications</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="skills" class="skills py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Skills</h2>
+            <p>Technologies I work with</p>
+        </div>
+        <div class="row">
+            {% for skill in skills %}
+            <div class="col-md-6 mb-4">
+                <div class="skill-card">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            {% if skill.icon %}
+                            <i class="{{skill.icon}}"></i>
+                            {% endif %}
+                            <strong>{{skill.name}}</strong>
+                        </div>
+                        <span>{{skill.percentage}}%</span>
+                    </div>
+                    <div class="progress mt-3">
+                        <div class="progress-bar skill-progress" role="progressbar" data-width="{{skill.percentage }}">
+                        </div>
+                    </div>
+                    <small class="text-muted">
+                        {{skill.category}}
+                    </small>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center">
+                No skills added yet.
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<section id="education" class="education py-5">
+
+    <div class="container">
+
+        <div class="section-heading text-center mb-5" data-aos="fade-up">
+
+            <span class="section-label">
+                Education
+            </span>
+
+            <h2>
+                My Education
+            </h2>
+
+            <p>
+                My academic background and qualifications.
+            </p>
+
+        </div>
+
+
+        <div class="timeline">
+
+            {% for item in education %}
+
+            <div class="timeline-item" data-aos="fade-up">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card">
+
+                    <span class="timeline-date">
+
+                        {{ item.start_year }}
+
+                        -
+
+                        {% if item.end_year %}
+                        {{ item.end_year }}
+                        {% else %}
+                        Present
+                        {% endif %}
+
+                    </span>
+
+
+                    <h3>
+                        {{ item.degree }}
+                    </h3>
+
+
+                    <h5>
+                        {{ item.institution }}
+                    </h5>
+
+
+                    {% if item.description %}
+
+                    <p>
+                        {{ item.description }}
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <p class="text-center">
+                No education information available.
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+<section id="experience" class="experience py-5">
+
+    <div class="container">
+
+        <div class="section-heading text-center mb-5"
+             data-aos="fade-up">
+
+            <span class="section-label">
+                Experience
+            </span>
+
+            <h2>
+                My Experience
+            </h2>
+
+            <p>
+                My professional journey and responsibilities.
+            </p>
+
+        </div>
+
+
+        <div class="timeline">
+
+            {% for item in experience %}
+
+                <div class="timeline-item"
+                     data-aos="fade-up">
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-card">
+
+                        <span class="timeline-date">
+
+                            {{ item.start_date|date:"M Y" }}
+
+                            -
+
+                            {% if item.current %}
+
+                                Present
+
+                            {% elif item.end_date %}
+
+                                {{ item.end_date|date:"M Y" }}
+
+                            {% endif %}
+
+                        </span>
+
+
+                        <h3>
+                            {{ item.job_title }}
+                        </h3>
+
+
+                        <h5>
+                            {{ item.company }}
+                        </h5>
+
+
+                        {% if item.location %}
+
+                            <small class="timeline-location">
+
+                                <i class="fa-solid fa-location-dot"></i>
+
+                                {{ item.location }}
+
+                            </small>
+
+                        {% endif %}
+
+
+                        <div class="experience-description">
+
+                            {{ item.description|linebreaks }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <p class="text-center">
+                    No experience information available.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+<section id="projects" class="projects py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Featured Projects</h2>
+            <p>Some of my recent work</p>
+        </div>
+        <div class="project-filters text-center mb-4">
+    <button type="button" class="btn btn-primary filter-btn active"
+            data-filter="all">All</button>
+    <button type="button" class="btn btn-outline-primary filter-btn"
+            data-filter="Web">Web</button>
+    <button type="button" class="btn btn-outline-primary filter-btn"
+            data-filter="Mobile">Mobile</button>
+    <button type="button" class="btn btn-outline-primary filter-btn"
+            data-filter="API">API</button>
+    <button type="button" class="btn btn-outline-primary filter-btn"
+            data-filter="AI">AI</button>
+    <button type="button" class="btn btn-outline-primary filter-btn"
+            data-filter="Other">Other</button>
+</div>
+        <div class="row g-4">
+            {% for project in projects %}
+            <div class="col-lg-4 col-md-6 project-item"
+     data-category="{{ project.category }}">
+
+                <div class="project-card">
+
+
+                    <div class="project-image">
+
+                        {% if project.thumbnail %}
+
+                        <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}">
+
+                        {% endif %}
+
+
+                        {% if project.featured %}
+
+                        <span class="featured-badge">
+                            Featured
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="project-content">
+
+
+                        <span class="project-category-small">
+
+                            {{ project.get_category_display }}
+
+                        </span>
+
+
+                        <h4>
+                            {{ project.title }}
+                        </h4>
+
+
+                        <p>
+                            {{ project.short_description }}
+                        </p>
+
+
+                        <!-- Technologies -->
+
+                        <div class="tech-list">
+
+                            {% for tech in project.technologies.all %}
+
+                            <span>
+
+                                {% if tech.icon %}
+
+                                <i class="{{ tech.icon }}"></i>
+
+                                {% endif %}
+
+                                {{ tech.name }}
+
+                            </span>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- Buttons -->
+
+                        <div class="project-buttons">
+
+
+                            <a href="{% url 'project_detail' project.slug %}" class="btn btn-primary btn-sm">
+
+                                View Project
+
+                                <i class="fa-solid fa-arrow-right"></i>
+
+                            </a>
+
+
+                            {% if project.github_url %}
+
+                            <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer"
+                                class="btn btn-dark btn-sm">
+
+                                <i class="fa-brands fa-github"></i>
+
+                            </a>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            {% empty %}
+            <div class="text-center">
+                <h5>No Projects added yet.</h5>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="contact-section py-5">
+    <div class="container">
+
+        <div class="section-heading text-center mb-5">
+            <span class="section-label">Get in Touch</span>
+            <h2>Let's Work Together</h2>
+            <p>Have a project or opportunity in mind? Send me a message.</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show"
+                     role="alert">
+                    {{ message }}
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="contact-card">
+
+            <form method="post"
+                  action="{% url 'contact_submit' %}">
+                {% csrf_token %}
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+                        <label for="id_name" class="form-label">Full Name</label>
+                        <input type="text"
+                               name="name"
+                               id="id_name"
+                               class="form-control"
+                               maxlength="100"
+                               autocomplete="name"
+                               required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="id_email" class="form-label">Email Address</label>
+                        <input type="email"
+                               name="email"
+                               id="id_email"
+                               class="form-control"
+                               maxlength="254"
+                               autocomplete="email"
+                               required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="id_subject" class="form-label">Subject</label>
+                        <input type="text"
+                               name="subject"
+                               id="id_subject"
+                               class="form-control"
+                               maxlength="150"
+                               required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="id_message" class="form-label">Message</label>
+                        <textarea name="message"
+                                  id="id_message"
+                                  class="form-control"
+                                  rows="6"
+                                  minlength="10"
+                                  required></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">
+                            Send Message
+                            <i class="fa-solid fa-paper-plane ms-2"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

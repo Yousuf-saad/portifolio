@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% block title %}
+{{ project.title }} | Yousuf Saad
+{% endblock %}
+
+
+{% block content %}
+
+<section class="project-detail">
+
+    <div class="container">
+
+        <!-- Back Button -->
+
+        <div class="project-back">
+
+            <a href="/#projects" class="back-link">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back to Projects
+
+            </a>
+
+        </div>
+
+
+        <!-- Project Header -->
+
+        <div class="project-detail-header"
+             data-aos="fade-up">
+
+            <span class="project-category">
+
+                {{ project.get_category_display }}
+
+            </span>
+
+
+            <h1>
+
+                {{ project.title }}
+
+            </h1>
+
+
+            <p>
+
+                {{ project.short_description }}
+
+            </p>
+
+        </div>
+
+
+        <!-- Project Image -->
+
+        <div class="project-detail-image"
+             data-aos="fade-up">
+
+            {% if project.thumbnail %}
+
+                <img
+                    src="{{ project.thumbnail.url }}"
+                    alt="{{ project.title }}"
+                >
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Project Information -->
+
+        <div class="row g-5 mt-4">
+
+
+            <!-- Description -->
+
+            <div class="col-lg-8"
+                 data-aos="fade-right">
+
+                <div class="project-description">
+
+                    <h2>
+                        About This Project
+                    </h2>
+
+                    {{ project.description|linebreaks }}
+
+                </div>
+
+            </div>
+
+
+            <!-- Sidebar -->
+
+            <div class="col-lg-4"
+                 data-aos="fade-left">
+
+
+                <div class="project-info-card">
+
+
+                    <h4>
+                        Technologies
+                    </h4>
+
+
+                    <div class="detail-tech-list">
+
+                        {% for technology in project.technologies.all %}
+
+                            <span class="detail-tech">
+
+                                {% if technology.icon %}
+
+                                    <i class="{{ technology.icon }}"></i>
+
+                                {% endif %}
+
+                                {{ technology.name }}
+
+                            </span>
+
+                        {% empty %}
+
+                            <span>
+                                No technologies added.
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- Links -->
+
+                    <div class="project-detail-buttons">
+
+
+                        {% if project.github_url %}
+
+                            <a
+                                href="{{ project.github_url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn btn-dark"
+                            >
+
+                                <i class="fa-brands fa-github"></i>
+
+                                GitHub
+
+                            </a>
+
+                        {% endif %}
+
+
+                        {% if project.live_url %}
+
+                            <a
+                                href="{{ project.live_url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn btn-primary"
+                            >
+
+                                <i class="fa-solid fa-globe"></i>
+
+                                Live Demo
+
+                            </a>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

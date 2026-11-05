@@ -55,14 +55,15 @@ body {
     color: #fff;
 }
 
-.bootom-nav {
+.bottom_nav {
     position: fixed;
     bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     width: 92%;
     height: 65px;
-    background: #fff;
+    background:rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
     border-radius: 50px;
     display: flex;
     justify-content: space-around;
@@ -71,13 +72,13 @@ body {
     z-index: 9999;
 }
 
-.bootom-nav a {
+.bottom_nav a {
     color: #444;
     font-size: 22px;
     transition: .3s;
 }
 
-.bottom-nav a:hover {
+.bottom_nav a:hover {
     color: #2563eb;
     transform: translateY(-5px);
 }
